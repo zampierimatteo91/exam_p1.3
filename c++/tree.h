@@ -2,9 +2,7 @@
 #include <memory>
 #include <cassert>
 #include <algorithm>
-#include <vector>
 
-//Compile with -std=c++14 for the moment
 //Create a function which stops you from defining Tkey as non-number
 
 //----------------TREE CLASS-------------------------------
@@ -77,6 +75,12 @@ class Tree {
   }
   
   void balance(const Iterator& loc_begin, const std::size_t loc_size, Tree<Tkey,Tval>& t);
+  void self_balance(){
+    Tree<Tkey,Tval> tmp;
+    balance(begin(), size(), tmp);
+    *this = tmp;
+    tmp.clear();
+  }
 
   void clear(){ root.reset(); _size = 0; }
 

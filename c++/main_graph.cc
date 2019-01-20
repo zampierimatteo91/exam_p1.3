@@ -52,6 +52,11 @@ int main(){
     std::cout << *it << " ";
   std::cout << std::endl;
 
+  tree.self_balance();
+  std::cout << "Size of the balanced tree: " << tree.size() << std::endl;
+  std::cout << "Root of the balanced tree: " << *tree.head() << std::endl;
+  std::cout << tree << std::endl;
+  
   tree.clear();
   std::cout << "Size of tree after deletion: " << tree.size() << std::endl;
 
