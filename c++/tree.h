@@ -21,7 +21,8 @@ class Tree {
 
     ~Node() = default;
     //~Node() { std::cout << "Ciao " << _leaf.first << std::endl;} //to check deallocation
-  
+
+    //find the next key
     Node* plus();
   };
   
@@ -35,6 +36,9 @@ class Tree {
     return ptr;
   }
 
+  //initialize graph
+  //copying from another (sub-)graph
+  //whose (local-)root is 'loc_root'
   void copy_graph( const Node* loc_root );
 
   //Find the extrema of the graph
@@ -89,6 +93,7 @@ class Tree {
     Node* ptr = _find(key);
     if(key == ptr->_leaf.first)
       return ptr->_leaf.second;
+    //else allocate node with value = default
     ptr->_next[bool{key>(ptr->_leaf.first)}].reset(new Node{std::pair<Tkey,Tval>{key,Tval{}},ptr});
     _size++;
     return (ptr->_next[bool{key>(ptr->_leaf.first)}].get())->_leaf.second;
@@ -109,6 +114,7 @@ class Tree {
     clear();
     auto tmp = t;
     (*this) = std::move(tmp);
+    return *this;
   }
 
   Tree(Tree&& t) noexcept //move ctr
@@ -167,8 +173,7 @@ template <class Tkey, class Tval>
   tmp = _parent;
   while( tmp && key>(tmp->_leaf.first) )
     tmp = tmp->_parent;
-  //if( tmp == nullptr )
-  if( !tmp )
+  if( !tmp ) //this can happen IFF the root is the only node
     return _next[1].get();
   return tmp;
 };
@@ -182,12 +187,12 @@ template <class Tkey,class Tval>
     return;
   }
   Node* ptr = _find(key);
-  if(key==(ptr->_leaf.first))
-    std::cout << "Warning: you tried to insert an already existing key! Val is not allocated." << std::endl;
-  else{
-    ptr->_next[bool{key>(ptr->_leaf.first)}].reset(new Node{std::pair<Tkey,Tval>{key,val},ptr});
+  if(key!=(ptr->_leaf.first)){
+     ptr->_next[bool{key>(ptr->_leaf.first)}].reset(new Node{std::pair<Tkey,Tval>{key,val},ptr});
     _size++;
   }
+  else
+    std::cout << "Warning: you tried to insert an already existing key! Val is not allocated." << std::endl;
 }
 
 //-------------------PRINT TREE-------------------
@@ -202,12 +207,13 @@ template <class Tkey, class Tval>
 std::ostream& operator<<(std::ostream& os , const Tree<Tkey,Tval>& t){
   /* for(auto& it: t) */
   /*     os << it << " "; */
-for(auto it=t.begin(); it!=t.end(); ++it)
+ for(auto it=t.begin(); it!=t.end(); ++it)
     std::cout << *it << " ";
-    return os;
+ return os;
 };
 
 //--------------------BALANCE TREE----------------
+//recursive
 template <class Tkey, class Tval>
   void Tree<Tkey,Tval>::balance(const class Tree<Tkey,Tval>::Iterator& loc_begin, const std::size_t loc_size, Tree<Tkey,Tval>& t){
 
@@ -216,7 +222,7 @@ template <class Tkey, class Tval>
   else{
     std::size_t median = loc_size/2 + 1;
     Iterator ptr = loc_begin;
-    for(auto i=1; i<median; i++) ++ptr;
+    for(std::size_t i=1; i<median; i++) ++ptr;
     t.insert((*ptr).first,(*ptr).second);
 
     Iterator loc_begin_1 = loc_begin;
@@ -232,6 +238,7 @@ template <class Tkey, class Tval>
 };
 
 //--------------COPY SEMANTICS------------------
+//recursive
 template <class Tkey, class Tval>
 void Tree<Tkey,Tval>::copy_graph( const Tree<Tkey,Tval>::Node* loc_root ){
   if(loc_root){
