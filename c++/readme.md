@@ -58,10 +58,10 @@ Then, we instruct the code to do the following:
 
 You can compile the code with the `Makefile`, and run the script `/scripts/run.sh` to generate the data `/data/data.txt`. Then, you can plot the data using the script `/scripts/plot.sh`. The results are shown in the two plots here below.
 
-![](/home/costantino/Scrivania/exam_p1.3/c++/plots/search.png)
+![](plots/search.png)
 
 The first plot shows the the averaged elapsed time (in us). We see that to find a key in the Raw non-balanced tree has always the worst efficiency, while the balanced tree and the `std::map` exhibit a similar behavior, with the balanced tree performing slightly better.
 
 This analysis is reinforced by the second plot, which shows the relative performances of, respectively, the non-balanced tree and the `std::map` , w.r.t. the balanced tree.
 
-![](/home/costantino/Scrivania/exam_p1.3/c++/plots/figure.png)
+![](plots/figure.png)
