@@ -35,3 +35,33 @@ Now we comment, where needed, on the implementation of the mandatory functions:
 - we implemented the optional operator `[]` , in both constant and non-constant versions.
 - in the definition of the `class Iterator`, the dereferencing operator `*it` returns the `std::pair<Tkey,Tval>` of the corresponding node. For printing `*it` , we override the operator `<<` in order to print a `std::pair` in the form `(key:val)`.
 - the only other public member, besides the mandatory ones and the optional `[]`, is an iterator `head()`, which returns an iterator to the `root` pointer, although we never use it in the class implementation. We used it in our tests, to check that the balance operation returned the correct novel `root`.
+
+
+
+## Tests
+
+We performed two tests: a generic test and a specific test.
+
+#### Generic test
+
+#### Specific test
+
+The specific test focuses on the function `find()`, with the aim of compare its performance in three cases: in a non-balanced tree, in the balanced version of the tree, and in the corresponding `std::map`. By performance, we mean the averaged elapsed time spent to find an element. The test is performed by the code `test_find.cc`, together with the scripts contained in the folder `/scripts`.
+
+.We choose four reference sizes: `N = 10^2, 10^3, 10^4, 10^5`. For each `N`, we allocate a` Tree<int,int>` and we insert in it `N` random numbers, with values from `0` to `N-1`. (Notice that, since the numbers are generated randomly, we expect by a rule of thumb that only about 68% of them will be actually inserted, because the others will merely be repetitions; indeed, we actually verified that this expectation is good with a good approximation.)
+
+Then, we instruct the code to do the following:
+
+- Use `find()` to look for `N/2` random numbers in the tree, and compute the averaged elapsed time to find a single number;
+- repeat the previous task for the balanced version of the tree;
+- repeat again the task for the corresponding `std::map`.
+
+You can compile the code with the `Makefile`, and run the script `/scripts/run.sh` to generate the data `/data/data.txt`. Then, you can plot the data using the script `/scripts/plot.sh`. The results are shown in the two plots here below.
+
+![](/home/costantino/Scrivania/exam_p1.3/c++/plots/search.png)
+
+The first plot shows the the averaged elapsed time (in us). We see that to find a key in the Raw non-balanced tree has always the worst efficiency, while the balanced tree and the `std::map` exhibit a similar behavior, with the balanced tree performing slightly better.
+
+This analysis is reinforced by the second plot, which shows the relative performances of, respectively, the non-balanced tree and the `std::map` , w.r.t. the balanced tree.
+
+![](/home/costantino/Scrivania/exam_p1.3/c++/plots/figure.png)
