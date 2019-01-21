@@ -2,7 +2,7 @@
 
 ## Implementation details
 
-We implement a `class <Tkey,Tval> Tree`. It has the following private attributes:
+We implement a `class <Tkey,Tval> Tree` in the header file `tree.h`. It has the following private attributes:
 
 - a `std::size_t _size` , which stands for the total number of nodes, initialized to `0`;
 - a `struct Node` which, in turn, contains:
@@ -40,19 +40,17 @@ Now we comment, where needed, on the implementation of the mandatory functions:
 
 ## Tests
 
-We performed two tests: a generic test and a specific test.
-
-#### Generic test
+We performed two tests: a generic test and a specific test. The`generic_test.cc` checks all the public features of the `class Tree`. It is self explanatory, as you can read in the commented lines of the code.
 
 #### Specific test
 
 The specific test focuses on the function `find()`, with the aim of compare its performance in three cases: in a non-balanced tree, in the balanced version of the tree, and in the corresponding `std::map`. By performance, we mean the averaged elapsed time spent to find an element. The test is performed by the code `test_find.cc`, together with the scripts contained in the folder `/scripts`.
 
-.We choose four reference sizes: `N = 10^2, 10^3, 10^4, 10^5`. For each `N`, we allocate a` Tree<int,int>` and we insert in it `N` random numbers, with values from `0` to `N-1`. (Notice that, since the numbers are generated randomly, we expect by a rule of thumb that only about 68% of them will be actually inserted, because the others will merely be repetitions; indeed, we actually verified that this expectation is good with a good approximation.)
+We choose four reference sizes: `N = 10^2, 10^3, 10^4, 10^5`. For each `N`, we allocate a ` Tree<int,int>` and we insert in it `N` random numbers, with values from `0` to `N-1`. (Notice that, since the numbers are generated randomly, we expect by a rule of thumb that only about 68% of them will be actually inserted, because the others will merely be repetitions; indeed, we actually verified that this expectation is good with a good approximation.)
 
 Then, we instruct the code to do the following:
 
-- Use `find()` to look for `N/2` random numbers in the tree, and compute the averaged elapsed time to find a single number;
+- Use `find()` to look for `N/2` random numbers in the tree, and compute the averaged elapsed time spent to find a single number;
 - repeat the previous task for the balanced version of the tree;
 - repeat again the task for the corresponding `std::map`.
 
@@ -60,8 +58,8 @@ You can compile the code with the `Makefile`, and run the script `/scripts/run.s
 
 ![](plots/search.png)
 
-The first plot shows the the averaged elapsed time (in us). We see that to find a key in the Raw non-balanced tree has always the worst efficiency, while the balanced tree and the `std::map` exhibit a similar behavior, with the balanced tree performing slightly better.
+The first plot shows the the averaged elapsed time (in us). We see that to find a key in the raw non-balanced tree has always the worst efficiency, while the balanced tree and the `std::map` exhibit a similar behavior, with the balanced tree performing slightly better.
 
-This analysis is reinforced by the second plot, which shows the relative performances of, respectively, the non-balanced tree and the `std::map` , w.r.t. the balanced tree.
+This analysis is reinforced by the second plot, which shows the relative performances of, respectively, the non-balanced tree and the `std::map` , w.r.t. the balanced tree (the best performer).
 
 ![](plots/figure.png)
