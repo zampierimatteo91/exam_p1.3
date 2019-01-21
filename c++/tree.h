@@ -130,33 +130,33 @@ class Tree {
 
 //------------CLASS ITERATOR-----------------
 template <class Tkey, class Tval>
-  class Tree<Tkey,Tval>::Iterator{
+	class Tree<Tkey,Tval>::Iterator{
 
-  using Node = Tree<Tkey,Tval>::Node;
-  Node *current;
+	using Node = Tree<Tkey,Tval>::Node;
+	Node *current;
 
  public:
-  Iterator(Node* n): current{n} {}
-  
-  std::pair<Tkey,Tval> operator*() const{
-    return std::pair<Tkey,Tval>{ current->_leaf.first,current->_leaf.second };
-  }
+	Iterator(Node* n): current{n} {}
+	
+	std::pair<Tkey,Tval> operator*() const {
+		return std::pair<Tkey,Tval>{ current->_leaf.first,current->_leaf.second };
+	}
 
-  Iterator& operator++() {
-    current = current->plus();
-    return *this;
-  }
-  
-  bool operator==(const Iterator& other) { return current == other.current; }
-  bool operator!=(const Iterator& other) { return !(*this == other); }
+	Iterator& operator++() {
+		current = current->plus();
+		return *this;
+	}
+	
+	bool operator==(const Iterator& other) { return current == other.current; }
+	bool operator!=(const Iterator& other) { return !(*this == other); }
 };
 
 template <class Tkey, class Tval>
-class Tree<Tkey, Tval>::ConstIterator : public Tree<Tkey, Tval>::Iterator{
+class Tree<Tkey, Tval>::ConstIterator : public Tree<Tkey, Tval>::Iterator {
  public:
-  using parent = Tree<Tkey,Tval>::Iterator;
-  using parent::Iterator;
-  const std::pair<Tkey,Tval> operator*() const { return parent::operator*(); }
+	using parent = Tree<Tkey,Tval>::Iterator;
+	using parent::Iterator;
+	const std::pair<Tkey,Tval> operator*() const { return parent::operator*(); }
 };
 
 //----------------NODE PLUS-------------
@@ -198,9 +198,9 @@ template <class Tkey,class Tval>
 //-------------------PRINT TREE-------------------
 //auxiliary: print std::pair
 template <class Tkey, class Tval>
-std::ostream& operator<<(std::ostream& os, std::pair<Tkey,Tval> obj){
-  os << "(" << obj.first << ":" << obj.second << ")";
-  return os;
+std::ostream& operator<<(std::ostream& os, std::pair<Tkey,Tval> obj) {
+	os << "(" << obj.first << ":" << obj.second << ")";
+	return os;
 };
 //print tree
 template <class Tkey, class Tval>
@@ -241,11 +241,11 @@ template <class Tkey, class Tval>
 //recursive
 template <class Tkey, class Tval>
 void Tree<Tkey,Tval>::copy_graph( const Tree<Tkey,Tval>::Node* loc_root ){
-  if(loc_root){
-    insert( loc_root->_leaf.first, loc_root->_leaf.second );
-    if( loc_root->_next[0].get() )
-  	copy_graph( loc_root->_next[0].get() );
-    if( loc_root->_next[1].get() )
-      copy_graph( loc_root->_next[1].get() );
-  }
+	if(loc_root){
+		insert( loc_root->_leaf.first, loc_root->_leaf.second );
+		if( loc_root->_next[0].get() )
+		copy_graph( loc_root->_next[0].get() );
+		if( loc_root->_next[1].get() )
+			copy_graph( loc_root->_next[1].get() );
+	}
 };
