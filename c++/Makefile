@@ -1,6 +1,6 @@
 SRC = test_find.cc
 
-CXX = g++
+CXX = g++ -O3
 CXXFLAGS = -Wall -Wextra -g -std=c++11
 
 EXE = $(SRC:.cc=.x)

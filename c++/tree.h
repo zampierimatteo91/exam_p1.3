@@ -191,8 +191,8 @@ template <class Tkey,class Tval>
      ptr->_next[bool{key>(ptr->_leaf.first)}].reset(new Node{std::pair<Tkey,Tval>{key,val},ptr});
     _size++;
   }
-  else
-    std::cout << "Warning: you tried to insert an already existing key! Val is not allocated." << std::endl;
+  /*else
+    std::cout << "Warning: you tried to insert an already existing key! Val is not allocated." << std::endl;*/
 }
 
 //-------------------PRINT TREE-------------------
