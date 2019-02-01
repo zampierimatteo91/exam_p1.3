@@ -46,7 +46,7 @@ We performed two tests: a generic test and a specific test. The`generic_test.cc`
 
 The specific test focuses on the function `find()`, with the aim of compare its performance in three cases: in a non-balanced tree, in the balanced version of the tree, and in the corresponding `std::map`. By performance, we mean the averaged elapsed time spent to find an element. The test is performed by the code `test_find.cc`, together with the scripts contained in the folder `/scripts`.
 
-We choose four reference sizes: `N = 10^2, 10^3, 10^4, 10^5`. For each `N`, we allocate a ` Tree<int,int>` and we insert in it `N` random numbers, with values from `0` to `N-1`. (Notice that, since the numbers are generated randomly, we expect by a rule of thumb that only about 68% of them will be actually inserted, because the others will merely be repetitions; indeed, we actually verified that this expectation is good with a good approximation.)
+We choose reference sizes from`N = 10^3` to `N = 10^5`. For each `N`, we allocate a ` Tree<int,int>` and we insert in it `N` random numbers, with values from `0` to `N-1`. (Notice that, since the numbers are generated randomly, we expect by a rule of thumb that only about 68% of them will be actually inserted, because the others will merely be repetitions; indeed, we actually verified that this expectation is good with a good approximation.)
 
 Then, we instruct the code to do the following:
 
@@ -56,10 +56,10 @@ Then, we instruct the code to do the following:
 
 You can compile the code with the `Makefile`, and run the script `/scripts/run.sh` to generate the data `/data/data.txt`. Then, you can plot the data using the script `/scripts/plot.sh`. The results are shown in the two plots here below.
 
-![](plots/search.png)
+![](plots/search_test.png)
 
-The first plot shows the the averaged elapsed time (in us). We see that to find a key in the raw non-balanced tree has always the worst efficiency, while the balanced tree and the `std::map` exhibit a similar behavior, with the balanced tree performing slightly better.
+The first plot shows the the averaged elapsed time (in ns). We see that to find a key with std::map has always the worst performance, while the best case is with the balanced-tree.
 
 This analysis is reinforced by the second plot, which shows the relative performances of, respectively, the non-balanced tree and the `std::map` , w.r.t. the balanced tree (the best performer).
 
-![](plots/figure.png)
+![](plots/difference.png)
