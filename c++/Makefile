@@ -1,4 +1,5 @@
-SRC = test_find.cc
+SRC = test_find.cc \
+	  generic_test.cc
 
 CXX = g++ -O3
 CXXFLAGS = -Wall -Wextra -g -std=c++11
